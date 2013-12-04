@@ -1,0 +1,11 @@
+<h1>Showing details of product</h1>
+
+<% @product = Product.find(params[:id]) %>
+<div>Name:</div>
+<div><%= @product.name %></div>
+<br>
+<div>Price:</div>
+<div><%= @product.price %></div>
+<br>
+<div>Description</div>
+<div><%= @product.description %></div>

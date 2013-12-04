@@ -1,0 +1,7 @@
+<h1>Form for New Cart</h1>
+
+<% c = Cart.new %>
+<% c.user_id = @user.id %>
+<% c.save %>
+Cart created successfully
+<%= link_to 'Back', user_carts_path(params[:user_id]) %>

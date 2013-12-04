@@ -1,0 +1,33 @@
+<%= flash[:buy] %>
+<%= flash[:notice] %><br>
+<%= flash[:logout] %>
+<% if session[:user_id] %>
+  You are logged in as <%= User.find(session[:user_id]).name %> <br>
+<% end %>
+<% if session[:cart_id] %>
+  Your cart has <%= Cart.find(session[:cart_id]).products.size %> products <br>
+<% end %>
+
+<h1>Listing all products</h1>
+
+<% @products.each do |product| %>
+  <br>
+  <strong>Name:</strong> <%= product.name %>
+  <br>
+  <strong>Price:</strong> <%= product.price %>
+  <br>
+  <strong>Description:</strong>  <%= product.description %>
+  <br>
+  <strong><%= link_to 'View Product Details', product_path(product.id) %></strong>
+  <br>
+  <br>
+<% end %>
+<br>
+<%= link_to 'Add products to Cart', edit_cart_path(session[:cart_id]) %><br>
+<%= link_to 'View the Cart', cart_path(session[:cart_id]) %><br>
+<% if current_user and current_user.admin == true %>
+  <%= link_to 'New Product', new_product_path %> <br>
+<% end %>
+<% @user = User.new %>
+
+

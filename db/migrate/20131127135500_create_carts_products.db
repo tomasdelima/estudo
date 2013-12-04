@@ -1,0 +1,13 @@
+class BrowsersOses < ActiveRecord::Migration
+  def self.up
+      create_table :browsers_oses, :id => false do |t|
+        t.references :browser
+        t.references :os
+        t.timestamps
+      end
+    end
+
+    def self.down
+      drop_table :browsers_oses
+  end
+end

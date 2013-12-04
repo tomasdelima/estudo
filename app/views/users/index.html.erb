@@ -1,0 +1,12 @@
+<h1>Listing all users</h1>
+
+<% @users.each do |user| %>
+  <br>
+  <strong>Name:</strong> <%= user.name %>
+  <br>
+  <strong>Email:</strong> <%= user.email %>
+  <br>
+  <strong><%= link_to 'View User Details', user_path(user.id) %></strong>
+<% end %>
+<br>
+<%= link_to 'New User', new_user_path %>

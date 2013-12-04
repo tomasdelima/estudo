@@ -1,0 +1,11 @@
+<h1>Showing details of cart</h1>
+<br>
+<strong>Products:</strong><br>
+<% @cart.product_ids.each do |product_id| %>
+  <br>
+  <%= Product.find(product_id).name %>
+  <%= link_to 'Remove Product', remove_path( id: params[:id], product_id: product_id) %>
+<% end %>
+<br><br>
+<%= link_to 'Buy this Cart', buy_cart_path(session[:cart_id]) %><br>
+<%= link_to 'Add Products', edit_cart_path(session[:cart_id]) %><br>

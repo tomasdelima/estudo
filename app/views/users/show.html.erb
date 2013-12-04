@@ -1,0 +1,11 @@
+<%= flash[:notice] %>
+<br>
+<h1>Showing details of user</h1>
+
+<% @user = User.find(params[:id]) %>
+<div>Name:</div>
+<div><%= @user.name %></div>
+<br>
+<div>Email:</div>
+<div><%= @user.email %></div>
+<br>
