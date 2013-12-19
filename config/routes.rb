@@ -1,6 +1,7 @@
 Store::Application.routes.draw do
 
-  devise_for :users, :controllers => {:registrations => "users/registrations"}
+  devise_for :users, controllers: {:registrations => "users/registrations", sessions: "users/sessions"}
+
   get "order/index"
   resources :products
 
@@ -10,9 +11,18 @@ Store::Application.routes.draw do
 
   root :to => 'products#index'
 
-  match 'carts/:id/remove' => 'carts#remove_product', as: 'remove', via: [:get, :post]
+  match 'carts/:cart_id/remove/:id' => 'carts#remove_product', as: 'remove_product', via: [:get, :post]
+  match 'carts/:cart_id/add/:id' => 'carts#add_product', as: 'add_product', via: [:get, :post]
+  match 'carts/:cart_id/subtract/:id' => 'carts#subtract_product', as: 'subtract_product', via: [:get, :post]
 
   match '/buy' => 'carts#buy', as: 'buy_cart', via: [:get, :post]
+
+  match '/import' => 'users#import', as: 'import', via: [:get, :post]
+  match '/import_cart' => 'users#import_cart', as: 'import_cart', via: [:get, :post]
+  match '/dont_import_cart' => 'users#dont_import_cart', as: 'dont_import_cart', via: [:get, :post]
+
+  match '/minus_quantity' => 'carts#minus_quantity', via: [:get, :post]
+  match '/plus_quantity'  => 'carts#plus_quantity',  via: [:get, :post]
 
 
    # The priority is based upon order of creation: first created -> highest priority.

@@ -1,11 +1,44 @@
 <h1>Showing details of cart</h1>
 <br>
-<strong>Products:</strong><br>
-<% @cart.product_ids.each do |product_id| %>
-  <br>
-  <%= Product.find(product_id).name %>
-  <%= link_to 'Remove Product', remove_path( id: params[:id], product_id: product_id) %>
-<% end %>
-<br><br>
-<%= link_to 'Buy this Cart', buy_cart_path(session[:cart_id]) %><br>
-<%= link_to 'Add Products', edit_cart_path(session[:cart_id]) %><br>
+
+<table>
+  <tr>
+    <td><strong>Product name:</strong></td>
+    <td><strong>Price:</strong></td>
+    <td></td>
+    <td></td>
+    <td><strong>#</strong> </td>
+    <td></td>
+    <td><strong>Total:</strong> </td>
+  </tr>
+  <% total = 0 %>
+  <% @carts_products.each do |carts_product| %>
+    <tr>
+      <% product = Product.find carts_product.product_id %>
+      <td> <%= product.name %></td>
+      <td align=right> <%= number_to_currency product.price, unit: '' %></td>
+      <td> <%= button_to 'View product details', product_path(product.id), method: 'get' %></td>
+      <td> <button class='mp' data-operation='minus' data-id='<%= product.id %>' data-price='<%= product.price %>'> - </button></td>
+      <td align=center> <div id="div<%= product.id %>" > <%= carts_product.quantity %></div></td>
+      <td> <button class='mp' data-operation='plus'  data-id='<%= product.id %>' data-price='<%= product.price %>'> + </button></td>
+      <td id='subtotal-<%= product.id %>' align=right>
+        <% subtotal = (carts_product.quantity * product.price) %>
+        <%= number_to_currency subtotal, unit: '' %>
+      </td>
+      <% total += subtotal %>
+      <td> <%= button_to 'Remove Product', remove_product_path( cart_id: @cart.id, id: carts_product.product_id),
+    data:{ :confirm => "Confirm?" } %></td>
+    </tr>
+  <% end %>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><hr></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td>
+    <td id='total' align=right><%= number_to_currency total, unit: '' %></td>
+  </tr>
+</table>
+<br>
+
+
+
+
+<%= link_to 'Buy this Cart', buy_cart_path(session[:cart_id]), data:{  :confirm => "Confirm?" } %><br>
+<%= link_to 'Add Products', products_path %><br>

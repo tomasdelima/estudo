@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131204131859) do
+ActiveRecord::Schema.define(version: 20131209164908) do
 
   create_table "carts", force: true do |t|
     t.integer  "user_id"
@@ -23,9 +23,10 @@ ActiveRecord::Schema.define(version: 20131204131859) do
   add_index "carts", ["product_id"], name: "index_carts_on_product_id"
   add_index "carts", ["user_id"], name: "index_carts_on_user_id"
 
-  create_table "carts_products", id: false, force: true do |t|
+  create_table "carts_products", force: true do |t|
     t.integer "cart_id"
     t.integer "product_id"
+    t.integer "quantity"
   end
 
   create_table "orders", force: true do |t|
@@ -36,9 +37,10 @@ ActiveRecord::Schema.define(version: 20131204131859) do
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id"
 
-  create_table "orders_products", id: false, force: true do |t|
+  create_table "orders_products", force: true do |t|
     t.integer "order_id"
     t.integer "product_id"
+    t.integer "quantity"
   end
 
   add_index "orders_products", ["order_id"], name: "index_orders_products_on_order_id"
@@ -69,8 +71,10 @@ ActiveRecord::Schema.define(version: 20131204131859) do
     t.string   "first_name"
     t.string   "last_name"
     t.boolean  "admin"
+    t.integer  "cart_id"
   end
 
+  add_index "users", ["cart_id"], name: "index_users_on_cart_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 

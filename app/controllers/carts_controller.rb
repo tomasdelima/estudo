@@ -1,12 +1,8 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy, :remove_product]
+  before_action :set_cart, except: [:buy, :cart_params]
 
   def edit
   end
-
-  # def index
-  #   redirect_to carts_path
-  # end
 
   def buy
     @order = Order.check( current_user, session[:cart_id] )
@@ -25,27 +21,16 @@ class CartsController < ApplicationController
     end
   end
 
-#Couldnt make test to pass through 'update > else'
-
-  def update
-    respond_to do |format|
-      if @cart.update_attributes(cart_params)
-        format.html { redirect_to @cart, notice: 'Cart was successfully updated.' }
-        format.json { head :no_content }
-      # else
-      #   format.html { render action: 'edit' }
-      #   format.json { render json: @cart.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   def set_cart
     @cart = Cart.find(session[:cart_id])
+    @carts_products = @cart.carts_products
+    @sum = 0
+    @carts_products.each { |cp| @sum += cp.quantity }
   end
 
   def remove_product
-    @cart.products.delete(Product.find(params[:product_id]))
-    @cart.save
+    @carts_products.where( product_id: params[:id]).destroy_all
     redirect_to cart_path(session[:cart_id])
   end
 
@@ -53,4 +38,23 @@ class CartsController < ApplicationController
     params.require(:cart).permit(:cart_id, product_ids: [])
   end
 
+  def minus_quantity
+    @carts_product = CartsProduct.find_by(cart_id: session[:cart_id], product_id: params[:id])
+    @carts_product.quantity -= 1 if @carts_product.quantity > 0
+    @carts_product.quantity = 0 if @carts_product.quantity < 0
+    @carts_product.save
+    render json: @carts_product.quantity
+  end
+
+  def plus_quantity
+    @carts_product = CartsProduct.find_by(cart_id: session[:cart_id], product_id: params[:id])
+    if !@carts_product
+      @carts_product = CartsProduct.create cart_id: session[:cart_id],
+        product_id: Product.find(params[:id]).id, quantity: 1
+    else
+      @carts_product.quantity += 1
+      @carts_product.save
+    end
+    render json: @carts_product.quantity
+  end
 end

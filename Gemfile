@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', "~> 2.8" #'2.0.0.beta.18'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'debugger'
@@ -14,6 +14,7 @@ group :test do
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
+  gem 'selenium-webdriver'
 end
 
 gem 'devise', '3.0.0.rc'

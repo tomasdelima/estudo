@@ -6,6 +6,5 @@ class ApplicationController < ActionController::Base
 
   def set_session
     session[:cart_id] ||= Cart.create.id
-    #Cart.last.id ||= session[:user_id]
   end
 end

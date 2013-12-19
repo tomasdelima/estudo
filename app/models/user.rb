@@ -4,7 +4,14 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :carts
+  belongs_to :cart
   has_many :orders
   validates :name, uniqueness: true, presence: true
+
+  def abandon_saved_cart new_cart_id
+    self.cart.destroy
+    self.cart_id = new_cart_id
+    self.save
+  end
+
 end

@@ -1,23 +1,22 @@
 require 'spec_helper'
 
-describe 'Function check should' do
-  before :each do
-    @user = FactoryGirl.create :user
-    @product = FactoryGirl.create :product
-    @cart = Cart.create
-  end
+describe Order do
+  describe '.check' do
 
-  it "return invalid order if not logged in" do
-    @cart.product_ids = [@product.id]
-    Order.check( nil, @cart.id ).valid?.should be false
-  end
+    let!(:user) { FactoryGirl.create :user }
+    let!(:product) { FactoryGirl.create :product }
 
-  it "return invalid order if Cart is empty" do
-    Order.check( @user, @cart.id ).valid?.should be false
-  end
+    it "should return invalid order if not logged in" do
+      Order.check( nil, user.cart_id ).valid?.should be false
+    end
 
-  it "return valid order if transaction works" do
-    @cart.product_ids = [@product.id]
-    expect( Order.check( @user, @cart.id ) ).to eq Order.first
+    it "should return invalid order if Cart is empty" do
+      Order.check( @user, user.cart_id ).valid?.should be false
+    end
+
+    it "should return valid order if transaction works" do
+      @carts_product = FactoryGirl.create :carts_product, cart_id: user.cart_id, product_id: product.id
+      expect( Order.check( user, user.cart_id ) ).to eq Order.first
+    end
   end
 end
