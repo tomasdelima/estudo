@@ -1,0 +1,18 @@
+<h1>Listing all Orders</h1>
+
+<table id="orders">
+<tr>
+  <td align='Center'><strong>Order #</strong></td>
+  <td align='Center'><strong>Created at</strong></td>
+  <td align='Center'><strong>Status</strong></td>
+  <td align='Center'><% link_to  %></td>
+</tr>
+  <% for order in @orders do %>
+    <tr>
+      <td align='Center'><%= link_to order.id, order_path(order.user, order) %></td>
+      <td align='Center'><%= order.created_at.to_date %></td>
+      <td align='Center'><%= order.status%></td>
+    </tr>
+  <% end %>
+
+</table>

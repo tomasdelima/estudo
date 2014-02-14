@@ -27,9 +27,11 @@ describe 'Under /products there', js: true do
     visit root_path
     click_on '+'
     click_on '+'
+    sleep 1
     CartsProduct.count.should eq 1
     CartsProduct.first.quantity.should eq 2
     click_on '-'
+    sleep 1
     CartsProduct.first.quantity.should eq 1
   end
 
@@ -42,12 +44,13 @@ describe 'Under /products there', js: true do
 end
 
 describe 'Under /products/new there' do
+  let!(:admin) { FactoryGirl.create :admin }
+
   before :each do
-    @admin = FactoryGirl.create :admin
     visit root_path
     click_on 'Login'
-    fill_in 'Email', with: @admin.email
-    fill_in 'Password', with: @admin.password
+    fill_in 'Email', with: admin.email
+    fill_in 'Password', with: admin.password
     click_on 'Sign in'
     visit new_product_path
   end
@@ -69,6 +72,26 @@ describe 'Under /products/new there' do
   it 'shloud be a Back button' do
     click_on 'Back'
     current_path.should eq(products_path)
+  end
+end
+
+describe 'Under /products/:id there' do
+  let!(:admin) { FactoryGirl.create :admin }
+  let!(:product) { FactoryGirl.create :product }
+
+  before :each do
+    visit root_path
+    click_on 'Login'
+    fill_in 'Email', with: admin.email
+    fill_in 'Password', with: admin.password
+    click_on 'Sign in'
+    visit product_path product
+  end
+
+  it 'should show Name, Price and Description' do
+    expect(page).to have_content(product.name)
+    expect(page).to have_content(product.price)
+    expect(page).to have_content(product.description)
   end
 end
 

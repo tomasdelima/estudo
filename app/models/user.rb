@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   validates :name, uniqueness: true, presence: true
 
   def abandon_saved_cart new_cart_id
+    # debugger
     self.cart.destroy
     self.cart_id = new_cart_id
     self.save

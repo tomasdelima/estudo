@@ -19,6 +19,7 @@ end
 
 gem 'devise', '3.0.0.rc'
 
+gem 'barista'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'

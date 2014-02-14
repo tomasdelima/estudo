@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 describe 'Under /carts/:id', js: true do
+  let(:cart)     { FactoryGirl.create :cart }
+  let(:user)     { FactoryGirl.create :user, cart: cart }
+  let!(:product) { FactoryGirl.create :product }
+
   before do
-    @cart = FactoryGirl.create :cart
-    @user = FactoryGirl.create :user, cart: @cart
-    @product = FactoryGirl.create :product
     visit new_user_session_path
-    fill_in 'Email', with: @user.email
+    fill_in 'Email', with: user.email
     fill_in 'Password', with: '12345678'
     click_on 'Sign in'
     visit products_path
     click_on '+'
-    visit cart_path @user.cart_id
+    visit cart_path user.cart_id
   end
 
   it 'should list all products' do

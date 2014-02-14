@@ -1,10 +1,23 @@
-<h1>Showing details of product</h1>
+<h1 id='<%= @product.id %>'>Showing details of product</h1>
 
 <div>Name:</div>
 <div><%= @product.name %></div>
 <br>
 <div>Price:</div>
-<div><%= @product.price %></div>
+<div><%= number_to_currency @product.price, unit: '' %></div>
 <br>
-<div>Description</div>
+<div>Description:</div>
 <div><%= @product.description %></div>
+<br>
+<div id='AllTags'>
+  Tags:
+  <div id='Tags'>
+    <% @product.tags.each do |t| %>
+      <%= button_to t.name, tag_path(t), class: :tags, method: :get %>
+    <% end %>
+  </div>
+  <% if current_user and current_user.admin %>
+    <button id="AddTag">Add Tag</button>
+    <input type="text" id="TagName">
+  <% end %>
+</div>

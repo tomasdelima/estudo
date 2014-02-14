@@ -9,7 +9,9 @@ class CartsController < ApplicationController
     if @order.valid?
       @cart = Cart.create
       session[:cart_id] = @cart.id
-      flash[:buy] = 'You bought the Cart. A new Cart was generated'
+      current_user.cart = @cart
+      current_user.save
+      flash[:buy] = "You bought the Cart."
       redirect_to products_path
     else
       flash[:buy] = @order.errors.messages.to_a[0][1][0]

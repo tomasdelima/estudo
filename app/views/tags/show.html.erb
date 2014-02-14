@@ -1,0 +1,12 @@
+<h1>Showing details of tag <%= @tag.name %></h1>
+<%= button_to "Delete Tag", delete_tag_path  if current_user and current_user.admin %>
+
+<h3>Listing all products:</h3>
+<table>
+  <% @tag.products.each do |t| %>
+    <tr>
+      <td><nbsp></td>
+      <td><%= link_to t.name, t  %> <br>
+    </tr>
+  <% end %>
+</table>

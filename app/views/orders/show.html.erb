@@ -1,0 +1,36 @@
+<h1>Details of Order</h1>
+
+<table id="order">
+  <tr>
+    <td><strong>Order #:</strong></td>
+    <td><%= @order.id %></td>
+  </tr>
+  <tr>
+    <td><strong>Created at:</strong></td>
+    <td><%= @order.created_at.to_date %></td>
+  </tr>
+  <tr id='status-line'>
+    <td><strong>Status:</strong></td>
+    <td id='status'> <%= @order.status %> </td>
+    <% if @visible_button %>
+      <td><button id='change' data-id=<%= @order.id %> data-visible=<%= @visible_button %>>Change to '<%= @order.get_next_status %>'</button></td>
+    <% end %>
+  </tr>
+</table>
+
+
+<table id="products">
+  <tr>
+    <td><h3>Products:</h3></td>
+  </tr>
+  <tr>
+    <td><strong>Name</strong></td>
+    <td><strong>Quantity</strong></td>
+  </tr>
+    <% for product in @order.products %>
+      <tr>
+        <td><%= product.name %></td>
+        <td align='center'><%= OrdersProduct.find_by(order_id: @order.id, product_id: product.id).quantity %></td>
+      </tr>
+    <% end %>
+</table>

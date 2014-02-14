@@ -15,13 +15,8 @@
   <% @carts_products.each do |carts_product| %>
     <tr>
       <% product = Product.find carts_product.product_id %>
-      <td> <%= product.name %></td>
-      <td align=right> <%= number_to_currency product.price, unit: '' %></td>
-      <td> <%= button_to 'View product details', product_path(product.id), method: 'get' %></td>
-      <td> <button class='mp' data-operation='minus' data-id='<%= product.id %>' data-price='<%= product.price %>'> - </button></td>
-      <td align=center> <div id="div<%= product.id %>" > <%= carts_product.quantity %></div></td>
-      <td> <button class='mp' data-operation='plus'  data-id='<%= product.id %>' data-price='<%= product.price %>'> + </button></td>
-      <td id='subtotal-<%= product.id %>' align=right>
+      <%= render "products/product_details", product: product %>
+      <td id='subtotal-<%= product.id %>' class='subtotal' align=right>
         <% subtotal = (carts_product.quantity * product.price) %>
         <%= number_to_currency subtotal, unit: '' %>
       </td>

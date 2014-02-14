@@ -1,0 +1,24 @@
+<% carts_product = CartsProduct.find_by(cart_id: session[:cart_id], product_id: product.id) %>
+<td>
+  <%= product.name %></td>
+<td align=right>
+  <%= number_to_currency product.price, unit: '' %>
+</td>
+<td>
+  <%= button_to 'View product details', product_path(product.id), method: :get %>
+</td>
+<td>
+  <button class='mp' data-operation='minus' data-id='<%= product.id %>' data-price='<%= product.price %>'>
+    -
+  </button>
+</td>
+<td>
+  <div id="div<%= product.id %>">
+    <%= if carts_product then carts_product.quantity else 0 end %>
+  </div>
+</td>
+<td>
+  <button class='mp' data-operation='plus'  data-id='<%= product.id %>' data-price='<%= product.price %>'>
+    +
+  </button>
+</td>
