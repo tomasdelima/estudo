@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="store">
 <head>
   <title>Store</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body >
+<body ng-controller="ProductsController">
 <%= link_to "ThisIsMyStore!!!", root_path, class: "ThisIsMyStore", method: :get %>
-<!-- <img src="/Users/tomasdelima/rails/store/app/assets/images/300.jpg"> -->
-<img src="/images/300.jpg">
 <p class="navbar-text pull-right">
   <% if user_signed_in? %>
     Logged in as <strong><%= current_user.email %></strong>.<br>
@@ -30,7 +28,7 @@
     <% end %>
   <% end %>
   <% @s=0 ; CartsProduct.where(cart_id: session[:cart_id]).each {|a| @s += a.quantity} %>
-  <br>Your cart has <b id="sum"><%= @s %></b> products
+  <br>Your cart has <b>{{total}}</b> products
 
 </p>
 <%= yield %>

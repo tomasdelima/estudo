@@ -2,6 +2,7 @@
 *.sassc
 .sass-cache
 capybara-*.html
+.DS_Store
 .rspec
 .rvmrc
 /.bundle
@@ -18,3 +19,4 @@ rerun.txt
 pickle-email-*.html
 .project
 config/initializers/secret_token.rb
+app/assets/javascripts/angular/.DS_Store

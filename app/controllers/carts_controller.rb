@@ -29,6 +29,29 @@ class CartsController < ApplicationController
     @carts_products = @cart.carts_products
     @sum = 0
     @carts_products.each { |cp| @sum += cp.quantity }
+
+    respond_to do |format|
+      format.json { render json: carts_product_quantity.to_json }
+      format.html {}
+    end
+
+  end
+
+  def carts_product_quantity
+    Product.all.map { |p|
+      if CartsProduct.where(cart_id: @cart.id).map{|cp| cp.product_id}.include? p.id
+        CartsProduct.find_by(cart_id: @cart.id, product_id: p.id).quantity
+      else
+        0
+      end
+    }
+  end
+
+  def products
+    respond_to do |format|
+      format.json { render json: CartsProduct.where(cart_id: @cart.id).to_json }
+      format.html {}
+    end
   end
 
   def remove_product

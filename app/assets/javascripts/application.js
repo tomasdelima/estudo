@@ -14,6 +14,9 @@
 //= require angular-route
 //= require angular-sanitize
 
+//= require angular/store
+//= require angular/services
+//= require angular/controllers
 //= require_tree ./angular
 //= require jquery
 //= require jquery_ujs

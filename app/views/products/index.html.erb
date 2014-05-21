@@ -1,19 +1,21 @@
-
 <h1>Listing all products</h1>
 
 <table>
   <tr>
-    <td><strong>Name:</strong></td>
-    <td><strong>Price:</strong></td>
+    <th><strong>Name:</strong></th>
+    <th><strong>Price:</strong></th>
   </tr>
-  <% @products.each do |product| %>
-    <% s = 0 %>
-    <tr><%= render "product_details", product: product %></tr>
-  <% end %>
+  <tr ng-repeat="product in products.all">
+    <td>{{product.name}}</td>
+    <td>{{product.price}}</td>
+    <td><a href="/products/{{product.id}}"><button>View product details</button></a></td>
+    <td><button ng-click="remove(product.id, $index)">-</button></td>
+    <td>{{cart.cart[$index]}}</td>
+    <td><button ng-click="add(product.id, $index)">+</button></td>
+  </tr>
 </table>
 <br>
 
-<% link_to 'Add products to Cart', products_path, class: :buttons %>
 <%= button_to 'View the Cart', cart_path(session[:cart_id]), method: :get, class: :buttons %>
 <%= button_to 'Buy this Cart', buy_cart_path(session[:cart_id]), data:{:confirm => "Confirm?"}, class: :buttons %>
 <% if current_user %>
