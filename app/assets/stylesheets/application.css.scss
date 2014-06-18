@@ -1,0 +1,77 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+body {
+  background-image: url("bg.jpg");
+
+  &:before {
+    content: ' ';
+    background-color: rgba(255, 255, 255, 0.7);
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .top-bar {
+    background: lightsteelblue;
+    opacity: 0.80;
+    padding: 6px;
+    margin: -8px;
+    height: 63px;
+
+    .this-is-my-store {
+      font-size: 40px;
+      font-family: monospace;
+      letter-spacing: -6px;
+      color: black;
+      text-decoration: none;
+      margin: 13px;
+      line-height: 54px;
+    }
+
+    .user-info {
+      display: inline;
+      right: 0;
+      margin: 5px;
+      position: absolute;
+    }
+  }
+
+  table {
+    background: whitesmoke;
+    width: 75%;
+    margin: auto;
+    opacity: 0.80;
+    text-align: center;
+
+    .product-buttons {
+      width: 90px;
+      display: flex;
+      margin: auto;
+
+      .product-quantity {
+        width: 35px;
+        display: inline;
+      }
+    }
+  }
+
+  .tags {
+    background-color: darkseagreen;
+    -webkit-border-radius: 15px;
+  }
+}
