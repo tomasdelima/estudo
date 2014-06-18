@@ -1,20 +1,31 @@
 <h1>Listing all products</h1>
 
-<table>
+<table ng-controller="ProductsController">
   <tr>
-    <th><strong>Name:</strong></th>
-    <th><strong>Price:</strong></th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Quantity</th>
+    <th></th>
   </tr>
-  <tr ng-repeat="product in products.all">
-    <td>{{product.name}}</td>
-    <td>{{product.price}}</td>
-    <td><a href="/products/{{product.id}}"><button>View product details</button></a></td>
-    <td><button ng-click="remove(product.id, $index)">-</button></td>
-    <td>{{cart.cart[$index]}}</td>
-    <td><button ng-click="add(product.id, $index)">+</button></td>
+  <tr ng-repeat="product in products">
+    <td class="product-name">
+      {{product.name}}
+    </td>
+    <td class="product-price">
+      {{product.price}}
+    </td>
+    <td class="product-details">
+      {{product.description}}
+    </td>
+    <td class="product-buttons" cart-buttons="{{product.id}}"></td>
+    <td class="product-view">
+      <a href="/products/{{product.id}}">
+        <button>View product details</button>
+      </a>
+    </td>
   </tr>
 </table>
-<br>
 
 <%= button_to 'View the Cart', cart_path(session[:cart_id]), method: :get, class: :buttons %>
 <%= button_to 'Buy this Cart', buy_cart_path(session[:cart_id]), data:{:confirm => "Confirm?"}, class: :buttons %>

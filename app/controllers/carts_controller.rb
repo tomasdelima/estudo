@@ -65,10 +65,14 @@ class CartsController < ApplicationController
 
   def minus_quantity
     @carts_product = CartsProduct.find_by(cart_id: session[:cart_id], product_id: params[:id])
-    @carts_product.quantity -= 1 if @carts_product.quantity > 0
-    @carts_product.quantity = 0 if @carts_product.quantity < 0
-    @carts_product.save
-    render json: @carts_product.quantity
+    if @carts_product
+      @carts_product.quantity -= 1 if @carts_product.quantity > 0
+      @carts_product.quantity = 0  if @carts_product.quantity < 0
+      @carts_product.save
+      render json: @carts_product.quantity
+    else
+      render json: {}
+    end
   end
 
   def plus_quantity

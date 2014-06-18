@@ -6,31 +6,34 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body ng-controller="ProductsController">
-<%= link_to "ThisIsMyStore!!!", root_path, class: "ThisIsMyStore", method: :get %>
-<p class="navbar-text pull-right">
-  <% if user_signed_in? %>
-    Logged in as <strong><%= current_user.email %></strong>.<br>
-    <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-    <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %> |
-    <%= link_to "Home", root_path, :class => 'navbar-link'  %>
-  <% else %>
-    <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-    <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %> |
-    <%= link_to "Home", root_path, :class => 'navbar-link'  %>
-  <% end %>
+<body ng-controller="CartController">
+  <div class="top-bar">
+    <%= link_to "ThisIsMyStore!!!", root_path, class: "this-is-my-store", method: :get %>
 
-  <% f = [flash[:notice], flash[:error], flash[:alert], flash[:buy]] %>
-  <% if f.any? %>
-  <br>
-    <% f.each do |a| %>
-      <%= a %>
-    <% end %>
-  <% end %>
-  <% @s=0 ; CartsProduct.where(cart_id: session[:cart_id]).each {|a| @s += a.quantity} %>
-  <br>Your cart has <b>{{total}}</b> products
+    <div class="user-info">
+      <% if user_signed_in? %>
+        Logged in as <strong><%= current_user.email %></strong>.<br>
+        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %> |
+        <%= link_to "Home", root_path, :class => 'navbar-link'  %>
+      <% else %>
+        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %> |
+        <%= link_to "Home", root_path, :class => 'navbar-link'  %>
+      <% end %>
 
-</p>
+      <% f = [flash[:notice], flash[:error], flash[:alert], flash[:buy]] %>
+      <% if f.any? %>
+      <br>
+        <% f.each do |a| %>
+          <%= a %>
+        <% end %>
+      <% end %>
+      <% @s=0 ; CartsProduct.where(cart_id: session[:cart_id]).each {|a| @s += a.quantity} %>
+      <br>Your cart has <b>{{total}}</b> products
+
+    </div>
+  </div>
 <%= yield %>
 
 </body>

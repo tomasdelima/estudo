@@ -17,6 +17,7 @@
 //= require angular/store
 //= require angular/services
 //= require angular/controllers
+//= require angular/directives
 //= require_tree ./angular
 //= require jquery
 //= require jquery_ujs
