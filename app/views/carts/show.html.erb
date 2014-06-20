@@ -15,7 +15,7 @@
       {{product.name}}
     </td>
     <td class="product-price">
-      {{product.price}}
+      {{product.price | number: 2}}
     </td>
     <td class="product-description">
       {{product.description}}
@@ -26,6 +26,9 @@
 
     <td class="product-name">
       {{product.total | number: 2}}
+    </td>
+    <td>
+      <a href="/carts/<%= @cart.id %>/remove/{{product.id}}">Remover produto</a>
     </td>
   </tr>
 

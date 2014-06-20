@@ -19,6 +19,10 @@
 //= require angular/controllers
 //= require angular/directives
 //= require_tree ./angular
+
+//= require underscore
+
 //= require jquery
 //= require jquery_ujs
+
 //= require_tree .

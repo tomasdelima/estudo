@@ -18,30 +18,34 @@ store.controller('CartController', ['$scope', '$http', 'ProductsService', 'CartS
     })
   })
 
-  $scope.add = function(id, index) {
+  $scope.add = function(id) {
     $http.get("/plus_quantity/" + id).success( function() {
-      if (!$scope.cart[index]) {
-        $scope.cart[index] = {quantity: 0}
+      var cartProduct = _($scope.cart).findWhere({id: id})
+
+      if (!cartProduct) {
+        cartProduct = {quantity: 0}
       }
 
-      $scope.cart[index].quantity += 1
-      $scope.cart[index].total += $scope.cart[index].price
+      cartProduct.quantity += 1
+      cartProduct.total += cartProduct.price
       $scope.totalCount += 1
-      $scope.total += $scope.cart[index].price
+      $scope.total += cartProduct.price
     })
   }
 
-  $scope.remove = function(id, index) {
+  $scope.remove = function(id) {
     $http.get("/minus_quantity/" + id).success( function() {
-      if ($scope.cart[index] && $scope.cart[index].quantity > 0) {
-        $scope.cart[index].quantity -= 1
-        $scope.cart[index].total -= $scope.cart[index].price
+      var cartProduct = _($scope.cart).findWhere({id: id})
+
+      if (cartProduct && cartProduct.quantity > 0) {
+        cartProduct.quantity -= 1
+        cartProduct.total -= cartProduct.price
         $scope.totalCount -= 1
-        $scope.total -= $scope.cart[index].price
+        $scope.total -= cartProduct.price
       }
 
-      if ($scope.cart[index] && $scope.cart[index].quantity < 0) {
-        $scope.cart[index].total = 0
+      if (cartProduct && cartProduct.quantity < 0) {
+        cartProduct.total = 0
       }
     })
   }

@@ -17,8 +17,8 @@ Store::Application.routes.draw do
 
   get 'get_cart'                      => 'carts#get_cart'
 
-  get 'carts/products'                => 'carts#products'
-  match 'carts/:cart_id/remove/:id'   => 'carts#remove_product',   via: [:get, :post], as: 'remove_product'
+  get   'carts/products'              => 'carts#products'
+  get   'carts/:cart_id/remove/:id'   => 'carts#remove_product',   via: [:get, :post], as: 'remove_product'
   match 'carts/:cart_id/add/:id'      => 'carts#add_product',      via: [:get, :post], as: 'add_product'
   match 'carts/:cart_id/subtract/:id' => 'carts#subtract_product', via: [:get, :post], as: 'subtract_product'
 
