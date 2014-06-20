@@ -10,21 +10,21 @@
     <td><strong>Total:</strong> </td>
   </tr>
 
-  <tr ng-repeat="product in cart">
-    <td class="product-name">
+  <tr ng-repeat="product in products">
+    <td class="product-name" ng-show="product.quantity">
       {{product.name}}
     </td>
-    <td class="product-price">
+    <td class="product-price" ng-show="product.quantity">
       {{product.price | number: 2}}
     </td>
-    <td class="product-description">
+    <td class="product-description" ng-show="product.quantity">
       {{product.description}}
     </td>
 
-    <td class="product-buttons" cart-buttons="{{product.id}}">
+    <td class="product-buttons" cart-buttons="{{product.id}}" ng-show="product.quantity">
     </td>
 
-    <td class="product-name">
+    <td class="product-name" ng-show="product.quantity">
       {{product.total | number: 2}}
     </td>
     <td>

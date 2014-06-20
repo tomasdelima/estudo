@@ -2,7 +2,14 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = Product.all
+    @products = Product.all.as_json
+
+    @products.map { |product|
+      product['quantity'] = current_user.cart.carts_products.find_by(product_id: product['id']).try(:quantity)
+      product['total'] = product['quantity'].to_i * product['price'].to_f
+    }
+
+
     respond_to do |format|
       format.html
       format.json { render json: @products }

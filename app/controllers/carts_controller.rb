@@ -31,15 +31,15 @@ class CartsController < ApplicationController
   end
 
   def get_cart
-    products = @cart.products.as_json
-    products.map { |product|
-      product['quantity'] = @cart.carts_products.find_by(product_id: product['id']).quantity
-      product['total'] = product['quantity'].to_i * product['price'].to_f
-    }
-    respond_to do |format|
-      format.json { render json: products }
-      format.html {}
-    end
+    # products = @cart.products.as_json
+    # products.map { |product|
+    #   product['quantity'] = @cart.carts_products.find_by(product_id: product['id']).quantity
+    #   product['total'] = product['quantity'].to_i * product['price'].to_f
+    # }
+    # respond_to do |format|
+    #   format.json { render json: products }
+    #   format.html {}
+    # end
   end
 
   def carts_product_quantity
