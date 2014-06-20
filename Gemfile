@@ -21,6 +21,8 @@ gem 'devise', '3.0.0.rc'
 gem 'underscore-rails'
 gem 'angularjs-rails'
 
+gem "twitter-bootstrap-rails"
+gem 'bootstrap-sass'
 
 gem 'barista'
 
