@@ -5,29 +5,33 @@
   <tr>
     <td><strong>Product name:</strong></td>
     <td><strong>Price:</strong></td>
-    <td></td>
-    <td></td>
+    <td><strong>Description:</strong></td>
     <td><strong>#</strong> </td>
-    <td></td>
     <td><strong>Total:</strong> </td>
   </tr>
-  <% total = 0 %>
-  <% @carts_products.each do |carts_product| %>
-    <tr>
-      <% product = Product.find carts_product.product_id %>
-      <%= render "products/product_details", product: product %>
-      <td id='subtotal-<%= product.id %>' class='subtotal' align=right>
-        <% subtotal = (carts_product.quantity * product.price) %>
-        <%= number_to_currency subtotal, unit: '' %>
-      </td>
-      <% total += subtotal %>
-      <td> <%= button_to 'Remove Product', remove_product_path( cart_id: @cart.id, id: carts_product.product_id),
-    data:{ :confirm => "Confirm?" } %></td>
-    </tr>
-  <% end %>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><hr></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td>
-    <td id='total' align=right><%= number_to_currency total, unit: '' %></td>
+
+  <tr ng-repeat="product in cart">
+    <td class="product-name">
+      {{product.name}}
+    </td>
+    <td class="product-price">
+      {{product.price}}
+    </td>
+    <td class="product-description">
+      {{product.description}}
+    </td>
+
+    <td class="product-buttons" cart-buttons="{{product.id}}">
+    </td>
+
+    <td class="product-name">
+      {{product.total | number: 2}}
+    </td>
+  </tr>
+
+
+  <tr><td></td><td><td></td><td></td><td><hr></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td>{{total | number: 2}}</td>
   </tr>
 </table>
 <br>

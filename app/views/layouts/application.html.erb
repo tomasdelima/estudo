@@ -30,7 +30,7 @@
         <% end %>
       <% end %>
       <% @s=0 ; CartsProduct.where(cart_id: session[:cart_id]).each {|a| @s += a.quantity} %>
-      <br>Your cart has <b>{{total}}</b> products
+      <br>Your cart has <b>{{totalCount}}</b> products
 
     </div>
   </div>

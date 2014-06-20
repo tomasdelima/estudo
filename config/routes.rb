@@ -15,8 +15,9 @@ Store::Application.routes.draw do
 
   resources :carts
 
-  get 'carts/set_cart' => 'carts#set_cart'
-  get 'carts/products' => 'carts#products'
+  get 'get_cart'                      => 'carts#get_cart'
+
+  get 'carts/products'                => 'carts#products'
   match 'carts/:cart_id/remove/:id'   => 'carts#remove_product',   via: [:get, :post], as: 'remove_product'
   match 'carts/:cart_id/add/:id'      => 'carts#add_product',      via: [:get, :post], as: 'add_product'
   match 'carts/:cart_id/subtract/:id' => 'carts#subtract_product', via: [:get, :post], as: 'subtract_product'
@@ -35,6 +36,5 @@ Store::Application.routes.draw do
 
   match '/new_tag'            => 'tags#new',    via: [:get, :post]
   match '/tags/:tag_id'       => 'tags#show',   via: [:get], as: "tag"
-  # match '/tags'               => 'tags#index',  via: [:get], as: "tags"
   match '/delete_tag/:tag_id' => 'tags#delete', via: [:post],as: "delete_tag"
 end

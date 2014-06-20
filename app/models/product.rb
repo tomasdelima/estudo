@@ -6,4 +6,6 @@ class Product < ActiveRecord::Base
   has_many :orders, through: :orders_products
   validates :name, presence: true, uniqueness: true
   validates :price, presence: true
+
+  attr_accessor :quantity
 end

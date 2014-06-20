@@ -23,18 +23,23 @@ class CartsController < ApplicationController
     end
   end
 
-
   def set_cart
     @cart = Cart.find(session[:cart_id])
     @carts_products = @cart.carts_products
     @sum = 0
     @carts_products.each { |cp| @sum += cp.quantity }
+  end
 
+  def get_cart
+    products = @cart.products.as_json
+    products.map { |product|
+      product['quantity'] = @cart.carts_products.find_by(product_id: product['id']).quantity
+      product['total'] = product['quantity'].to_i * product['price'].to_f
+    }
     respond_to do |format|
-      format.json { render json: carts_product_quantity.to_json }
+      format.json { render json: products }
       format.html {}
     end
-
   end
 
   def carts_product_quantity
@@ -77,12 +82,12 @@ class CartsController < ApplicationController
 
   def plus_quantity
     @carts_product = CartsProduct.find_by(cart_id: session[:cart_id], product_id: params[:id])
-    if !@carts_product
-      @carts_product = CartsProduct.create cart_id: session[:cart_id],
-        product_id: Product.find(params[:id]).id, quantity: 1
-    else
+    if @carts_product
       @carts_product.quantity += 1
       @carts_product.save
+    else
+      @carts_product = CartsProduct.create( cart_id: session[:cart_id],
+        product_id: Product.find(params[:id]).id, quantity: 1)
     end
     render json: @carts_product.quantity
   end
