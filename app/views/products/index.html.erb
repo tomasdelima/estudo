@@ -13,27 +13,25 @@
       {{product.name}}
     </td>
     <td class="product-price">
-      {{product.price}}
+      {{product.price | number: 2}}
     </td>
     <td class="product-details">
       {{product.description}}
     </td>
     <td class="product-buttons" cart-buttons="{{product.id}}"></td>
     <td class="product-view">
-      <a href="/products/{{product.id}}">
-        <button>View product details</button>
-      </a>
+      <a href="/products/{{product.id}}" class="btn">View product details</a>
     </td>
   </tr>
 </table>
 
-<%= button_to 'View the Cart', cart_path(session[:cart_id]), method: :get, class: :buttons %>
-<%= button_to 'Buy this Cart', buy_cart_path(session[:cart_id]), data:{:confirm => "Confirm?"}, class: :buttons %>
+<%= link_to 'View the Cart', cart_path(session[:cart_id]), class: :btn %>
+<%= link_to 'Buy this Cart', buy_cart_path(session[:cart_id]), data:{:confirm => "Confirm?"}, class: :btn %>
 <% if current_user %>
-  <%= button_to 'View my Orders', orders_path(current_user), class: :buttons %>
+  <%= link_to 'View my Orders', orders_path(current_user), class: :btn %>
   <% if current_user.admin %>
-    <%= button_to 'View all Orders', all_orders_path, class: :buttons %>
-    <%= button_to 'New product', new_product_path, method: :get, class: :buttons %>
+    <%= link_to 'View all Orders', all_orders_path, class: :btn %>
+    <%= link_to 'New product', new_product_path, class: :btn %>
   <% end %>
 <% end %>
 

@@ -28,7 +28,7 @@
       {{product.total | number: 2}}
     </td>
     <td>
-      <a class="btn btn-sucess" href="/carts/<%= @cart.id %>/remove/{{product.id}}">Remover produto</a>
+      <a class="btn btn-danger btn-mini" href="/carts/<%= @cart.id %>/remove/{{product.id}}">Remover produto</a>
     </td>
   </tr>
 
@@ -42,5 +42,5 @@
 
 
 
-<%= link_to 'Buy this Cart', buy_cart_path(session[:cart_id]), data:{  :confirm => "Confirm?" } %><br>
-<%= link_to 'Add Products', products_path %><br>
+<%= link_to 'Buy this Cart', buy_cart_path(session[:cart_id]), data:{  :confirm => "Confirm?" }, class: :btn %><br>
+<%= link_to 'Add Products', products_path, class: :btn %><br>
