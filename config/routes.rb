@@ -15,8 +15,6 @@ Store::Application.routes.draw do
 
   resources :carts
 
-  get 'get_cart'                      => 'carts#get_cart'
-
   get   'carts/products'              => 'carts#products'
   get   'carts/:cart_id/remove/:id'   => 'carts#remove_product',   via: [:get, :post], as: 'remove_product'
   match 'carts/:cart_id/add/:id'      => 'carts#add_product',      via: [:get, :post], as: 'add_product'

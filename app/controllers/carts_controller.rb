@@ -30,18 +30,6 @@ class CartsController < ApplicationController
     @carts_products.each { |cp| @sum += cp.quantity }
   end
 
-  def get_cart
-    # products = @cart.products.as_json
-    # products.map { |product|
-    #   product['quantity'] = @cart.carts_products.find_by(product_id: product['id']).quantity
-    #   product['total'] = product['quantity'].to_i * product['price'].to_f
-    # }
-    # respond_to do |format|
-    #   format.json { render json: products }
-    #   format.html {}
-    # end
-  end
-
   def carts_product_quantity
     Product.all.map { |p|
       if CartsProduct.where(cart_id: @cart.id).map{|cp| cp.product_id}.include? p.id

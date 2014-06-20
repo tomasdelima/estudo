@@ -3,6 +3,7 @@ store.controller('ProductsController', ['$scope', '$http', 'ProductsService', fu
     $scope.products = ProductsService.all
     $.each($scope.products, function(a, b) {
       b = b || {quantity: 0, price: 0}
+      if(!b.quantity) { b.quantity = 0 }
     })
 
     $scope.totalCount = 0
@@ -16,7 +17,7 @@ store.controller('ProductsController', ['$scope', '$http', 'ProductsService', fu
 
   $scope.add = function(id) {
     $http.get("/plus_quantity/" + id).success( function() {
-      var cartProduct = _($scope.cart).findWhere({id: id})
+      var cartProduct = _($scope.products).findWhere({id: id})
 
       if (!cartProduct) {
         cartProduct = {quantity: 0}
@@ -31,7 +32,7 @@ store.controller('ProductsController', ['$scope', '$http', 'ProductsService', fu
 
   $scope.remove = function(id) {
     $http.get("/minus_quantity/" + id).success( function() {
-      var cartProduct = _($scope.cart).findWhere({id: id})
+      var cartProduct = _($scope.products).findWhere({id: id})
 
       if (cartProduct && cartProduct.quantity > 0) {
         cartProduct.quantity -= 1
